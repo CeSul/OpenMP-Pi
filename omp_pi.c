@@ -47,7 +47,6 @@ void set_args(int argc, char* argv[],unsigned long* num_steps){
   if(!num_steps_IsSet){
     *num_steps=1e4;
   }
-
 }
 
 
@@ -57,7 +56,7 @@ void main (int argc, char* argv[]){
    program_name = argv[0];
 
    unsigned long i;
-   double sum[20];
+   double sum[40];
    double pi;
    int id;
    int nthreads;
@@ -82,10 +81,10 @@ void main (int argc, char* argv[]){
          for (i=1; i < num_steps; i++){
             x_sqr=i*i*step_sqr;
             sum[id] += 4.0/(1.0+x_sqr);
-
+          }
      printf("Thread %d done.\n", id);
-// Parallel region over
 }
+// Parallel region over
      //printf("Number of threads = %d \n", nthreads);
      for(i=0, pi=3.0; i<nthreads ;i++){
       pi += sum[i];
