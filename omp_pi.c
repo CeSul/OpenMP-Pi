@@ -35,10 +35,15 @@ void set_args(int argc, char* argv[],unsigned long* num_steps) {
             *num_steps=strtoul(argv[2],&end_ptr,10);
             num_steps_IsSet=1;
             break;
+
+        case 'h':
+            usage();
+            exit(0);
+        
         default:
             printf("Bad option %s\n",argv[1]);
             usage();
-            break;
+            exit(1);
         }
         argv+=2;
         argc-=2;

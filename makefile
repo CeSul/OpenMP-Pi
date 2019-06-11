@@ -1,4 +1,4 @@
-CC=gcc-7
+CC=gcc
 CFLAGS= -g -fopenmp
 OBJS= omp_pi.o
 
