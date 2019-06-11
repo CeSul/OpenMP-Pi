@@ -15,10 +15,11 @@ double step,step_sqr;
 char * program_name;
 
 void usage() {
+    printf("A program to estimate the value of Pi by numerically solving an\n");
+    printf("integral using n grid points.\n\n");
     printf("Usage is %s [options]\n",program_name);
     printf("Options:\n");
     printf("-n <grid_pts>   Sets number of grid points to use (default=1e4)\n");
-    exit(8);
 }
 
 void set_args(int argc, char* argv[],unsigned long* num_steps) {
