@@ -20,6 +20,7 @@ void usage() {
     printf("Usage is %s [options]\n",program_name);
     printf("Options:\n");
     printf("-n <grid_pts>   Sets number of grid points to use (default=1e4)\n");
+    printf("-h              Displays this message.                         \n");
 }
 
 void set_args(int argc, char* argv[],unsigned long* num_steps) {
@@ -58,7 +59,7 @@ void set_args(int argc, char* argv[],unsigned long* num_steps) {
 
 
 
-void main (int argc, char* argv[]) {
+int main (int argc, char* argv[]) {
     program_name = argv[0];
 
     unsigned long i;
@@ -84,7 +85,7 @@ void main (int argc, char* argv[]) {
         printf("Thread %d starting...\n", id);
 
         #pragma omp for schedule(dynamic) private(x_sqr)
-        for (i=1; i < num_steps; i++) {
+        for (i=0; i < num_steps; i++) {
             x_sqr=i*i*step_sqr;
             sum[id] += 4.0/(1.0+x_sqr);
         }
@@ -92,9 +93,10 @@ void main (int argc, char* argv[]) {
     }
 // Parallel region over
     //printf("Number of threads = %d \n", nthreads);
-    for(i=0, pi=3.0; i<nthreads ; i++) {
+    for(i=0; i<nthreads ; i++) {
         pi += sum[i];
     }
     pi*=step;
     printf("\npi=%.16f\n",pi);
+    return 0;
 }
