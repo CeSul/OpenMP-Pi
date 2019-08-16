@@ -64,7 +64,7 @@ int main (int argc, char* argv[]) {
 
     unsigned long i;
     double sum[40];
-    double pi;
+    double pi = 0;
     int id;
     int nthreads;
 
