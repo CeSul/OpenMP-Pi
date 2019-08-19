@@ -63,7 +63,7 @@ int main (int argc, char* argv[]) {
     program_name = argv[0];
 
     unsigned long i;
-    double sum[40];
+    double sum=0.0;
     double pi = 0;
     int id;
     int nthreads;
@@ -76,7 +76,6 @@ int main (int argc, char* argv[]) {
     {
         double x_sqr;
         id = omp_get_thread_num();
-        sum[id] = 0.0;
         double to_add;
         if(id==0) {
             nthreads = omp_get_num_threads();
@@ -84,19 +83,16 @@ int main (int argc, char* argv[]) {
         }
         printf("Thread %d starting...\n", id);
 
-        #pragma omp for schedule(dynamic) private(x_sqr)
+        #pragma omp for private(x_sqr) reduction(+:sum)
         for (i=0; i < num_steps; i++) {
             x_sqr=i*i*step_sqr;
-            sum[id] += 4.0/(1.0+x_sqr);
+            sum += 1/(1.0+x_sqr);
         }
         printf("Thread %d done.\n", id);
     }
 // Parallel region over
     //printf("Number of threads = %d \n", nthreads);
-    for(i=0; i<nthreads ; i++) {
-        pi += sum[i];
-    }
-    pi*=step;
+    pi=(4.0*step)*sum;
     printf("\npi=%.16f\n",pi);
     return 0;
 }
